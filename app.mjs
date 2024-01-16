@@ -6,7 +6,7 @@ import foodNutrientsRouter from './routes/food_nutrients.js';
 import allergensRouter from './routes/allergens.js';
 import foodAllergensRouter from './routes/food_allergens.js';
 import ingredientsRouter from './routes/ingredients.js';
-import foodIngredientsRouter from '/routes/food_ingredients.js';
+import foodIngredientsRouter from './routes/food_ingredients.js';
 
 const app = express();
 const port = 3000;
