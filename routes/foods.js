@@ -6,11 +6,20 @@ const router = express.Router();
 // Create a new food item
 router.post('/', async (req, res) => {
     try {
-        const value = req.body;
-        const queryText = 'INSERT INTO foods (food_name, food_category) VALUES (?, ?)';
-        const queryParams = [value.food_name, value.food_category];
+        const {
+            food_name,
+            food_category,
+            food_image
+        } = req.body;
+
+        const queryText = 'INSERT INTO foods (food_name, food_category, food_image) VALUES (?, ?, ?)';
+        const queryParams = [food_name, food_category, food_image];
         const rows = await query(queryText, queryParams);
-        res.status(201).json({ food_id: rows.insertId });
+        
+        res.status(201).json({ 
+            message: 'Food added successfully', 
+            food_id: rows.insertId 
+        });
     } catch (err) {
         res.status(500).send(err.message);
     }
