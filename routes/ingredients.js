@@ -4,7 +4,7 @@ import { query } from '../db.js'; // Import your database connection or ORM
 const router = express.Router();
 
 // POST endpoint to add a new ingredient
-router.post('/ingredients', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { ingredient_name } = req.body;
         const result = await query('INSERT INTO Ingredients (ingredient_name) VALUES (?)', [ingredient_name]);
@@ -18,7 +18,7 @@ router.post('/ingredients', async (req, res) => {
 });
 
 // GET endpoint to retrieve all ingredients
-router.get('/ingredients', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const [rows] = await query('SELECT * FROM Ingredients');
         res.status(200).json(rows);
@@ -28,7 +28,7 @@ router.get('/ingredients', async (req, res) => {
 });
 
 // GET endpoint to retrieve a specific ingredient by ID
-router.get('/ingredients/:ingredient_id', async (req, res) => {
+router.get('/:ingredient_id', async (req, res) => {
     try {
         const [rows] = await query('SELECT * FROM Ingredients WHERE ingredient_id = ?', [req.params.ingredient_id]);
         if (rows.length === 0) return res.status(404).send('Ingredient not found.');
@@ -39,7 +39,7 @@ router.get('/ingredients/:ingredient_id', async (req, res) => {
 });
 
 // PUT endpoint to update an ingredient by ID
-router.put('/ingredients/:ingredient_id', async (req, res) => {
+router.put(':ingredient_id', async (req, res) => {
     try {
         const { ingredient_name } = req.body;
         const result = await query('UPDATE Ingredients SET ingredient_name = ? WHERE ingredient_id = ?', [ingredient_name, req.params.ingredient_id]);
@@ -51,7 +51,7 @@ router.put('/ingredients/:ingredient_id', async (req, res) => {
 });
 
 // DELETE endpoint to delete an ingredient by ID
-router.delete('/ingredients/:ingredient_id', async (req, res) => {
+router.delete(':ingredient_id', async (req, res) => {
     try {
         const result = await query('DELETE FROM Ingredients WHERE ingredient_id = ?', [req.params.ingredient_id]);
         if (result.affectedRows === 0) return res.status(404).send('Ingredient not found.');
