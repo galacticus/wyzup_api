@@ -13,7 +13,6 @@ const port = 3000;
 
 //this will need to be turned off later maybe?
 app.use(cors());
-
 app.use(express.json());
 app.use('/foods', foodsRouter);
 app.use('/nutrients', nutrientsRouter);
