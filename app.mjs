@@ -11,8 +11,8 @@ import foodIngredientsRouter from './routes/food_ingredients.js';
 const app = express();
 const port = 3000;
 const corsOptions = {
-    origin: 'http://192.168.1.102:9000',
-};
+    origin: 'http://192.168.1.102:9000'
+}
 
 dotenv.config();
 
