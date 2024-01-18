@@ -10,11 +10,14 @@ import foodIngredientsRouter from './routes/food_ingredients.js';
 
 const app = express();
 const port = 3000;
+const corsOptions = {
+    origin: 'http://192.168.1.102:9000',
+};
 
-//this will need to be turned off later maybe?
-app.use(cors());
+dotenv.config();
+
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static('public'));
 app.use('/foods', foodsRouter);
 app.use('/nutrients', nutrientsRouter);
 app.use('/food_nutrients', foodNutrientsRouter);
@@ -24,5 +27,5 @@ app.use('/ingredients', ingredientsRouter);
 app.use('/food_ingredients', foodIngredientsRouter);
 
 app.listen(port, () => {
-    console.log(`API running on port ${port}.`);
+    console.log(`Wyzup API running on port ${port}.`);
 });
