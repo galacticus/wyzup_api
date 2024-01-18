@@ -14,8 +14,6 @@ const corsOptions = {
     origin: 'http://192.168.1.102:9000'
 }
 
-dotenv.config();
-
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/foods', foodsRouter);
