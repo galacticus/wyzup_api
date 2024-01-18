@@ -97,51 +97,6 @@ router.get('/:food_id/allergens', async(req, res) => {
     }
 });
 
-/*
-// Retrieve food nutrients
-router.get('/:foodName/nutrients', async (req, res) => {
-    try {
-        const foodName = req.params.foodName;
-        const queryText = `
-            SELECT n.nutrient_name, fn.qty
-            FROM foods f
-            JOIN food_nutrients fn ON f.food_id = fn.food_id
-            JOIN nutrients n ON fn.nutrient_id = n.nutrient_id
-            WHERE f.food_name = ?
-            `;
-        
-        const rows = await query(queryText, [foodName]);
-        if (rows.length === 0) return res.status(404).send(`No nutritional information found for ${foodName}.`);
-        res.status(200).json(rows);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-
-// Retrieve food allergens
-router.get('/:foodName/allergens', async (req, res) => {
-    try {
-        const foodName = req.params.foodName;
-        const queryText = `
-        SELECT a.allergen_name
-        FROM foods f
-        JOIN food_allergens fa ON f.food_id = fa.food_id
-        JOIN allergens a ON fa.allergen_id = a.allergen_id
-        WHERE f.food_name = ?
-        `;
-
-        const rows = await query(queryText, [foodName]);
-        if (rows.length === 0) return res.status(404).send(`No allergens found for ${foodName}.`);
-        res.status(200).json(rows);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-
-// Retrieve food ingredients
-router.get('/:foodName/ingredients')
-*/
-
 // Update a food item
 router.put('/:food_id', async (req, res) => {
     try {
