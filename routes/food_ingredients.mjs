@@ -1,5 +1,5 @@
 import express from 'express';
-import { query } from '../db.js'; // Import your database connection or ORM
+import { query } from '../db.mjs'; // Import your database connection or ORM
 
 const router = express.Router();
 
