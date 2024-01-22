@@ -59,6 +59,19 @@ router.get('/:food_name/food_id', async (req, res) => {
     }
 });
 
+// Retrieve the id for specific food item based on name
+router.get('/:food_name', async (req, res) => {
+    try {
+        const food_name = req.params.food_name;
+        const queryText = 'SELECT * FROM foods WHERE lower(foods.food_name) = lower(?)';
+        const rows = await query(queryText, [food_name]);
+        if (rows.length === 0) return res.status(404).send(`No food called ${food_name} seems to exist.`);
+        res.status(200).json(rows[0]);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
 // Retrieve food nutrients
 router.get('/:food_id/nutrients', async(req, res) => {
     try {
