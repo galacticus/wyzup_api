@@ -59,8 +59,8 @@ router.get('/:food_name/food_id', async (req, res) => {
     }
 });
 
-// Retrieve the id for specific food item based on name
-router.get('/:food_name', async (req, res) => {
+// Retrieve the specific food item based on name search
+router.get('/search/:food_name', async (req, res) => {
     try {
         const food_name = req.params.food_name;
         const queryText = 'SELECT * FROM foods WHERE lower(foods.food_name) = lower(?)';
