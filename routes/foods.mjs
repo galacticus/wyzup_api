@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
 
         const queryText = 'INSERT INTO foods (food_name, food_category, food_image) VALUES (?, ?, ?)';
         const queryParams = [food_name, food_category, food_image];
+        console.log(`PARAMS: ${queryParams}`);
         const rows = await query(queryText, queryParams);
         
         res.status(201).json({ 
@@ -121,8 +122,8 @@ router.put('/:food_id', async (req, res) => {
     }
   });
   
-  // Delete a food item
-  router.delete('/:food_id', async (req, res) => {
+// Delete a food item
+router.delete('/:food_id', async (req, res) => {
     try {
         const result = await query('DELETE FROM foods WHERE food_id = ?', [req.params.food_id]);
         if (result.affectedRows === 0) return res.status(404).send('Food not found.');
@@ -130,6 +131,6 @@ router.put('/:food_id', async (req, res) => {
     } catch (err) {
         res.status(500).send(err.message);
     }
-  });
+});
 
-  export default router;
+export default router;
