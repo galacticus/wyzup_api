@@ -12,17 +12,30 @@ router.post('/', async (req, res) => {
             food_image
         } = req.body;
 
-        const queryText = 'INSERT INTO foods (food_name, food_category, food_image) VALUES (?, ?, ?)';
-        const queryParams = [food_name, food_category, food_image];
-        console.log(`PARAMS: ${queryParams}`);
-        const rows = await query(queryText, queryParams);
-        
-        res.status(201).json({ 
-            message: 'Food added successfully', 
-            food_id: rows.insertId 
-        });
-    } catch (err) {
-        res.status(500).send(err.message);
+        const checkSql = 'SELECT food_id FROM foods WHERE food_name = ? ';
+        const checkParams = [food_name];
+        const existingEntry = await query(checkSql, checkParams);
+
+        if (existingEntry.length > 0) {
+            // Entry exists, return the existing ID
+            console.log(`Entry exists, return the existing ID: ${existingEntry[0].food_id}`)
+            res.status(200).json({
+                message: 'Food already exists', 
+                food_id: existingEntry[0].food_id
+            });
+        } else {
+            const insertSql = 'INSERT INTO foods (food_name, food_category, food_image) VALUES (?, ?, ?)';
+            const insertParams = [food_name, food_category, food_image];
+            const insertResults = await query(queryText, queryParams);
+            console.log(`Entry does not exist, ID generated: ${ insertResults.insertId}`);
+            res.status(200).json({ 
+                message: 'Food added successfully', 
+                food_id: insertResults.insertId 
+            });
+        }
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({"message": `An error occured: ${error.message}`});
     }
 });
 
@@ -78,11 +91,11 @@ router.get('/:food_id/nutrients', async(req, res) => {
     try {
         const food_id = req.params.food_id;
         const queryText = `
-        SELECT n.nutrient_name, fn.qty 
+        SELECT n.nutrient_name, fn.per_100_grams, fn.unit, n.nutrient_category
         FROM foods f
         JOIN food_nutrients fn ON f.food_id = fn.food_id
         JOIN nutrients n ON fn.nutrient_id = n.nutrient_id
-        WHERE f.food_id = ? 
+        WHERE f.food_id = ?
         `;
         const rows = await query(queryText, [food_id]);
         if (rows.length === 0) return res.status(404).send(`No food id ${food_id} or nutrient data does not exist.`)

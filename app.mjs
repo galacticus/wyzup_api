@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import foodsRouter from './routes/foods.mjs';
 import nutrientsRouter from './routes/nutrients.mjs';
 import foodNutrientsRouter from './routes/food_nutrients.mjs';
@@ -14,6 +16,7 @@ const port = 3000;
 const corsOptions = {
     origin: '*'
 }
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -25,6 +28,7 @@ app.use('/food_allergens', foodAllergensRouter);
 app.use('/ingredients', ingredientsRouter);
 app.use('/food_ingredients', foodIngredientsRouter);
 app.use('/upload', uploadRouter);
+app.use(express.static(join(__dirname, 'public')));
 
 app.listen(port, () => {
     console.log(`Wyzup API running on port ${port}.`);

@@ -2,15 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
 
-const uploadFolder = 'uploads'
-
-// Check if the folder exists
-if (!fs.existsSync(uploadFolder)) {
-    fs.mkdirSync(uploadFolder);
-    console.log(`Folder '${uploadFolder}' created successfully.`);
-} else {
-    console.log(`Folder '${uploadFolder}' already exists.`);
-}
+const uploadFolder = 'public/images'
 
 const router = express.Router();
 const storage = multer.diskStorage({
